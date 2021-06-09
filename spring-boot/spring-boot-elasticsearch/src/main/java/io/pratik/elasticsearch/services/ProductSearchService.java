@@ -10,11 +10,10 @@ import java.util.stream.Collectors;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.aggregations.Aggregation;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
@@ -47,7 +46,7 @@ public class ProductSearchService {
 		this.elasticsearchOperations = elasticsearchOperations;
 	}
 
-	public List<String> createProductIndexBulk(final List<Product> products) {
+	public List<IndexedObjectInformation> createProductIndexBulk(final List<Product> products) {
 
 		List<IndexQuery> queries = products.stream()
 				.map(product -> new IndexQueryBuilder().withId(product.getId().toString()).withObject(product).build())
@@ -60,7 +59,7 @@ public class ProductSearchService {
 
 	public String createProductIndex(Product product) {
 
-		IndexQuery indexQuery = new IndexQueryBuilder().withId(product.getId().toString()).withObject(product).build();
+		IndexQuery indexQuery = new IndexQueryBuilder().withId(product.getId()).withObject(product).build();
 		String documentId = elasticsearchOperations.index(indexQuery, IndexCoordinates.of(PRODUCT_INDEX));
 
 		return documentId;
@@ -87,7 +86,6 @@ public class ProductSearchService {
 
 		List<SearchHit<Product>> searchHits = 
 				productHits.getSearchHits();
-		int i = 0;
 		for (SearchHit<Product> searchHit : searchHits) {
 			log.info("searchHit {}", searchHit);
 		}

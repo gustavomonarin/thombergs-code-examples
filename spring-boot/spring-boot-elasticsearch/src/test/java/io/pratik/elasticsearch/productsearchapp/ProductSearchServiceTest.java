@@ -1,24 +1,16 @@
-/**
- * 
- */
 package io.pratik.elasticsearch.productsearchapp;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.elasticsearch.core.SearchHits;
 
 import io.pratik.elasticsearch.models.Product;
 import io.pratik.elasticsearch.services.ProductSearchService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Pratik Das
@@ -31,28 +23,13 @@ class ProductSearchServiceTest {
 	@Autowired
 	private ProductSearchService productSearchService;
 
-	
-	@BeforeEach
-	void setUp() throws Exception {
-		
-		
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterEach
-	void tearDown() throws Exception {
-		
-	}
-
 	/**
 	 * Test method for {@link io.pratik.elasticsearch.services.ProductSearchService#createProductIndexBulk(java.util.List)}.
 	 */
 	@Test
 	void testCreateProductIndexBulk() {
 		
-		List<Product> products = new ArrayList<Product>();
+		List<Product> products = new ArrayList<>();
 		products.add(Product.builder()
 				.id(UUID.randomUUID().toString())
 				.name("New Apple iPhone 12 Pro Max (128GB) - Pacific Blue")
@@ -110,7 +87,7 @@ class ProductSearchServiceTest {
 						"Display : QLED Panel | Q HDR Elite (HDR 10+) | Slim and stylish design")
 				.build()
 				);
-		List<String> documentIDs = productSearchService.createProductIndexBulk(products );
+		List<IndexedObjectInformation> documentIDs = productSearchService.createProductIndexBulk(products );
 		log.info("documentIDs {}", documentIDs);
 	}
 

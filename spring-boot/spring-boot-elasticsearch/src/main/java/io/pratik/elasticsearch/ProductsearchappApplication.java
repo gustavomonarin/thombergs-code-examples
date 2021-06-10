@@ -1,4 +1,4 @@
-package io.pratik.elasticsearch.productsearchapp;
+package io.pratik.elasticsearch;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,7 +10,6 @@ import java.util.Scanner;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
